@@ -46,12 +46,12 @@ $category->set('id', 1);
 $category->set('category', PKG_NAME);
 
 $events = array();
-$events['OnParseDocument']= $modx->newObject('modPluginEvent');
+$events['OnParseDocument'] = $modx->newObject('modPluginEvent');
 $events['OnParseDocument']->fromArray(array(
     'event' => 'OnParseDocument',
     'priority' => 0,
     'propertyset' => 0,
-),'',true,true);
+), '', true, true);
 
 $plugins = array();
 $plugin = $modx->newObject('modPlugin');
@@ -62,12 +62,9 @@ $plugin->fromArray(array(
     'plugincode' => getSnippetContent($sources['plugins'] . 'plugin.extends.php'),
     'static' => 1,
     'source' => 1,
-    'static_file' => 'core/components/' . PKG_NAME_LOWER . '/elements/plugins/plugin.extends.php'), '', true, true);
-
-$properties = include $sources['build'] . 'properties/properties.' . $v . '.php';
-$plugin->setProperties($properties);
+    'static_file' => 'core/components/' . PKG_NAME_LOWER . '/elements/plugins/plugin.extends.php'
+), '', true, true);
 $plugin->addMany($events);
-
 $plugins[] = $plugin;
 
 if (!is_array($plugins)) {
@@ -85,9 +82,17 @@ $attr = array(
     xPDOTransport::RELATED_OBJECTS => true,
     xPDOTransport::RELATED_OBJECT_ATTRIBUTES => array(
         'Plugins' => array(
+            xPDOTransport::UNIQUE_KEY => 'name',
             xPDOTransport::PRESERVE_KEYS => false,
             xPDOTransport::UPDATE_OBJECT => true,
-            xPDOTransport::UNIQUE_KEY => 'name',
+            xPDOTransport::RELATED_OBJECTS => true,
+            xPDOTransport::RELATED_OBJECT_ATTRIBUTES => array(
+                'PluginEvents' => array(
+                    xPDOTransport::PRESERVE_KEYS => true,
+                    xPDOTransport::UPDATE_OBJECT => false,
+                    xPDOTransport::UNIQUE_KEY => array('pluginid', 'event'),
+                )
+            )
         )
     ),
 );
