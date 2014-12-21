@@ -1,0 +1,5 @@
+Changelog for Extends.
+
+0.8.0 beta
+==============
+- initial release
