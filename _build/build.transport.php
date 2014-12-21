@@ -59,10 +59,7 @@ $plugin->fromArray(array(
     'id' => 0,
     'name' => 'Extends',
     'description' => 'Nested template for MODX Revolution',
-    'plugincode' => getSnippetContent($sources['plugins'] . 'plugin.extends.php'),
-    'static' => 1,
-    'source' => 1,
-    'static_file' => 'core/components/' . PKG_NAME_LOWER . '/elements/plugins/plugin.extends.php'
+    'plugincode' => getSnippetContent($sources['plugins'] . 'plugin.extends.php')
 ), '', true, true);
 $plugin->addMany($events);
 $plugins[] = $plugin;
